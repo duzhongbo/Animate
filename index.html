@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>html5</title>
+</head>
+<body>
+	
+<style type="text/css">
+.wrap{width:700px;height:500px;background-color:#ccc;position:relative;}
+.box{width:20px;height:20px;background-color:#333;position:absolute;}
+
+
+</style>
+
+
+<div class="wrap">
+    <div class="box" id="box"></div>
+</div>
+
+<script type="text/javascript">
+var aData = [
+{
+	width:20,
+	height:20
+},
+{
+	width:80,
+	height:80
+}
+
+]
+// 获取和赋值样式方法
+function css(attr,value){
+	if (arguments.length == 1){
+		return parseFloat(getComputedStyle(box, null)[attr]);
+	}else if (arguments.length == 2){
+		box.style[attr] = value + "px";
+	}	
+}
+
+var opt = aData[1];
+// 主逻辑
+function move(){
+	var bComplete = true;
+	for(var p in opt){
+		var iCur = css(p);
+		var iSpeed = (opt[p] - iCur) / 5;
+		iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+		opt[p] == iCur || (bComplete = false, css(p, iCur + iSpeed));
+	}
+	bComplete && clearInterval(timer);
+}
+
+// 入口
+function main(){
+	window.timer = setInterval(function(){
+		move();
+	},30);
+}
+</script>
+
+
+</body>
+</html>
